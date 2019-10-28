@@ -12,6 +12,7 @@ module.exports = {
         "class-method-use-this": "off",
         "no-use-before-define": "off",
         "react/jsx-filename-extension": "off",
-        "no-restricted-globals": "off"
+        "no-restricted-globals": "off",
+        "import/no-dynamic-require": "off"
     }
 };
