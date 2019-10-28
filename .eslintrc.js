@@ -11,6 +11,7 @@ module.exports = {
         "object-shorthand": "off",
         "class-method-use-this": "off",
         "no-use-before-define": "off",
-        "react/jsx-filename-extension": "off"
+        "react/jsx-filename-extension": "off",
+        "no-restricted-globals": "off"
     }
 };
