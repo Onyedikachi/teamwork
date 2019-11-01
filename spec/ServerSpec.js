@@ -17,7 +17,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: 'http://localhost:3000/v1/user', 
+          url: 'http://localhost:3000/api/v1/user', 
           auth:{
             bearer: 'token'
           },
@@ -37,7 +37,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: 'http://localhost:3000/v1/user/login', 
+          url: 'http://localhost:3000/api/v1/user/login', 
           auth:{
             bearer: 'token'
           },
@@ -55,7 +55,7 @@ describe('Teamwork', () => {
       const formData = {};
       const commentId = 1;
       Request.delete(
-        {url: `http://localhost:3000/v1/article/comment/${commentId}`, 
+        {url: `http://localhost:3000/api/v1/article/comment/${commentId}`, 
         auth:{
           bearer: 'token'
         },
@@ -74,7 +74,7 @@ describe('Teamwork', () => {
       const articleId = 1
       Request.delete(
       {
-        url: `http://localhost:3000/v1/article/${articleId}`, 
+        url: `http://localhost:3000/api/v1/article/${articleId}`, 
         auth:{
           bearer: 'token'
         },
@@ -94,7 +94,7 @@ describe('Teamwork', () => {
       const userId = 1;
       Request.delete(
         {
-          url: `http://localhost:3000/v1/gif/${gifId}`, 
+          url: `http://localhost:3000/api/v1/gif/${gifId}`, 
           auth:{
             bearer: 'token'
           },
@@ -116,7 +116,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: 'http://localhost:3000/v1/user/login', 
+          url: 'http://localhost:3000/api/v1/user/login', 
           auth:{
             bearer: 'token'
           },
@@ -137,7 +137,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: `http://localhost:3000/v1/gif`, 
+          url: `http://localhost:3000/api/v1/gif`, 
           auth:{
             bearer: 'token'
           },
@@ -158,7 +158,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: 'http://localhost:3000/v1/gif/share', 
+          url: 'http://localhost:3000/api/v1/gif/share', 
           auth:{
             bearer: 'token'
           },
@@ -179,7 +179,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: 'http://localhost:3000/v1/gif', 
+          url: 'http://localhost:3000/api/v1/gif', 
           auth:{
             bearer: 'token'
           },
@@ -204,7 +204,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: 'http://localhost:3000/v1/article', 
+          url: 'http://localhost:3000/api/v1/article', 
           auth:{
             bearer: 'token'
           },
@@ -226,7 +226,7 @@ describe('Teamwork', () => {
       };
       Request.put(
         {
-          url: 'http://localhost:3000/v1/article/share',
+          url: 'http://localhost:3000/api/v1/article/share',
           auth:{
             bearer: 'token'
           }, 
@@ -252,7 +252,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: 'http://localhost:3000/v1/article', 
+          url: 'http://localhost:3000/api/v1/article', 
           auth:{
             bearer: 'token'
           },
@@ -279,7 +279,7 @@ describe('Teamwork', () => {
       };
       Request.put(
         {
-          url: 'http://localhost:3000/v1/article', 
+          url: 'http://localhost:3000/api/v1/article', 
           auth:{
             bearer: 'token'
           },
@@ -306,7 +306,7 @@ describe('Teamwork', () => {
       };
       Request.put(
         {
-          url: 'http://localhost:3000/v1/article', 
+          url: 'http://localhost:3000/api/v1/article', 
           auth:{
             bearer: 'token'
           },
@@ -325,7 +325,7 @@ describe('Teamwork', () => {
       const gifId =  1;
       Request.delete(
         {
-          url: `http://localhost:3000/v1/user/${userId}/gifs/${gifId}`, 
+          url: `http://localhost:3000/api/v1/user/${userId}/gifs/${gifId}`, 
           auth:{
             bearer: 'token'
           },
@@ -344,7 +344,7 @@ describe('Teamwork', () => {
       const gifId =  1;
       Request.delete(
         {
-          url: `http://localhost:3000/v1/user/${userId}/gifs/${gifId}`, 
+          url: `http://localhost:3000/api/v1/user/${userId}/gifs/${gifId}`, 
           auth:{
             bearer: 'token'
           },
@@ -374,7 +374,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: `http://localhost:3000/v1/article/comment`, 
+          url: `http://localhost:3000/api/v1/article/comment`, 
           auth:{
             bearer: 'token'
           },
@@ -391,7 +391,7 @@ describe('Teamwork', () => {
       const formData = {};
       Request.get(
         {
-          url: `http://localhost:3000/v1/articles`, 
+          url: `http://localhost:3000/api/v1/articles`, 
           auth:{
             bearer: 'token'
           },
@@ -409,7 +409,7 @@ describe('Teamwork', () => {
       const formData = {};
       Request.get(
         {
-          url: `http://localhost:3000/v1/articles`, 
+          url: `http://localhost:3000/api/v1/articles`, 
           auth:{
             bearer: 'token'
           },
@@ -428,7 +428,7 @@ describe('Teamwork', () => {
       const categoryId = 1;
       Request.get(
         {
-          url: `http://localhost:3000/v1/articles/category/${categoryId}`, 
+          url: `http://localhost:3000/api/v1/articles/category/${categoryId}`, 
           auth:{
             bearer: 'token'
           },
@@ -453,7 +453,7 @@ describe('Teamwork', () => {
       
       Request.post(
         {
-          url: `http://localhost:3000/v1/comment/flag`, 
+          url: `http://localhost:3000/api/v1/comment/flag`, 
           auth:{
             bearer: 'token'
           },
@@ -477,7 +477,7 @@ describe('Teamwork', () => {
       };
       Request.post(
         {
-          url: `http://localhost:3000/v1/article/flag`, 
+          url: `http://localhost:3000/api/v1/article/flag`, 
           auth:{
             bearer: 'token'
           },
@@ -502,7 +502,7 @@ describe('Teamwork', () => {
       
       Request.post(
         {
-          url: `http://localhost:3000/v1/gifs/flag`, 
+          url: `http://localhost:3000/api/v1/gifs/flag`, 
           auth:{
             bearer: 'token'
           },
