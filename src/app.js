@@ -23,4 +23,8 @@ app.get('/', (req, res) => {
   res.status(200).send('Teamwork Backend Server Setup');
 });
 
+const apiRoutes = require('./router');
+
+app.use('/api/v1', apiRoutes);
+
 module.exports = app;
