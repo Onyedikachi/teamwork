@@ -13,7 +13,8 @@ describe('Teamwork', () => {
         userPhone: 08302830,
         userAddress: '2, Hebert Maculay street, Yaba, Lagos',
         userRole: 0,
-        userFullName: 'Adams Oshomole'
+        userFullName: 'Adams Oshomole',
+        isAdmin: true,
       };
       Request.post(
         {
