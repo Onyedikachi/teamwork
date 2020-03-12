@@ -27,7 +27,12 @@ describe('Teamwork', () => {
             if (err){
               console.log(err);
             }else{
-              expect(res.statusCode).toEqual(201);
+              if(body){
+                const json = JSON.parse(body)
+                if (json.message == 'Email already exists')
+                  expect(res.statusCode).toEqual(400)
+              }
+              expect(res.statusCode).toEqual(200);
             }
       });
     });
