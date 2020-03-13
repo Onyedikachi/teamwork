@@ -1,6 +1,9 @@
+/* eslint-disable radix */
+/* eslint-disable consistent-return */
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
+const config = require('../../config');
 
 /**
  * Create users
@@ -17,24 +20,40 @@ module.exports.createUser = (req, res) => {
       if (result.rows.length > 0)
         return res
           .status(400)
-          .json({ message: 'Email already exists', status: 400 });
-    })
-    .catch(error => {
-      if (error) {
-        return res.status(400).end();
-      }
-    });
+          .json({ message: 'Email already exists', status: 'error' });
 
-  User.saveUser(userData)
-    .then(success => {
-      if (success) {
-        return res.status(200).end();
-      }
-      return res.status(400).end();
+      User.saveUser(userData)
+        .then(user => {
+          if (user) {
+            const token = jwt.sign(user, config.jwtsecret);
+            return res.status(200).json({
+              data: {
+                token: token,
+                userId: parseInt(user.user_id),
+                message: 'User account successfully created'
+              },
+              status: 'success'
+            });
+          }
+          return res.status(400).json({
+            message: 'Error encountered while creating employee',
+            status: 'error'
+          });
+        })
+        .catch(error => {
+          if (error) {
+            return res.status(400).json({
+              message: 'Error encountered while creating employee',
+              status: 'errpr'
+            });
+          }
+        });
     })
     .catch(error => {
       if (error) {
-        return res.status(400).end();
+        return res
+          .status(400)
+          .json({ message: 'Email does not exist', status: 'error' });
       }
     });
 };
@@ -53,14 +72,28 @@ module.exports.login = async (req, res) => {
       if (result) {
         const user = result.rows[0];
         bcrypt.compare(userData.userPassword, user.user_password).then(ans => {
-          if (ans) return res.status(200).end();
-          return res.status(400).end();
+          delete user.user_password;
+          const token = jwt.sign(user, config.jwtsecret);
+          if (ans)
+            return res.status(200).json({
+              data: {
+                token: token,
+                userId: parseInt(user.user_id),
+                message: 'Sigin successful'
+              },
+              status: 'success'
+            });
+          return res
+            .status(400)
+            .json({ message: 'Invalid Credentials', status: 'error' });
         });
       }
     })
     .catch(error => {
       if (error) {
-        return res.status(400).end();
+        return res
+          .status(400)
+          .json({ message: 'Invalid Credentials', status: 'error' });
       }
     });
 };

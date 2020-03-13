@@ -26,13 +26,13 @@ User.saveUser = ({
       values.push(userName);
 
       const query = `INSERT INTO users (user_phone, user_email, user_password, 
-    role_id,user_address, user_name) VALUES($1, $2, $3, $4,$5, $6)`;
+    role_id,user_address, user_name) VALUES($1, $2, $3, $4,$5, $6) RETURNING *`;
 
       pool.query(query, values, (err, results) => {
         if (err) {
           reject();
         } else {
-          resolve(true);
+          resolve(results.rows[0]);
         }
       });
     });
