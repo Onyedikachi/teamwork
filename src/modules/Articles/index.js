@@ -67,7 +67,7 @@ module.exports.updateArticle = (req, res) => {
       }
       return res.status(400).json({
         data: {
-          message: 'Error creating Article'
+          message: 'Error updating Article'
         },
         status: 'error'
       });
@@ -75,7 +75,36 @@ module.exports.updateArticle = (req, res) => {
     .catch(error => {
       return res.status(400).json({
         data: {
-          message: 'Error creating Article'
+          message: 'Error updating Article'
+        },
+        status: 'error'
+      });
+    });
+};
+module.exports.deleteArticle = (req, res) => {
+  const article = {};
+  article.articleId = parseInt(req.params.articleId);
+  Article.delete(article)
+    .then(count => {
+      if (count > 0) {
+        return res.status(200).json({
+          data: {
+            message: 'Article successfully deleted'
+          },
+          status: 'success'
+        });
+      }
+      return res.status(400).json({
+        data: {
+          message: 'Article does not exist'
+        },
+        status: 'error'
+      });
+    })
+    .catch(error => {
+      return res.status(400).json({
+        data: {
+          message: 'Error deleting Article'
         },
         status: 'error'
       });

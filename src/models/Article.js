@@ -59,4 +59,20 @@ Article.update = ({
     });
   });
 
+Article.delete = ({ articleId }) =>
+  new Promise((resolve, reject) => {
+    const values = [];
+    values.push(articleId);
+
+    const query = `DELETE FROM articles WHERE article_id = $1`;
+
+    pool.query(query, values, (err, results) => {
+      if (err) {
+        reject();
+      } else {
+        resolve(results.rowCount);
+      }
+    });
+  });
+
 module.exports = Article;
