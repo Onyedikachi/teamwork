@@ -1,6 +1,7 @@
 const cloudinary = require('cloudinary');
 const { pool } = require('../../db');
 const config = require('../config');
+const Comment = require('./Comment');
 
 cloudinary.config({
   cloud_name: config.cloudStore.cloudName,
@@ -54,5 +55,19 @@ Gif.delete = ({ gifId }) =>
         });
       });
     });
+  });
+Gif.comment = commentDesc =>
+  new Promise((resolve, reject) => {
+    const values = Object.keys(commentDesc).map(key => {
+      return commentDesc[key];
+    });
+
+    Comment.add(values)
+      .then(result => {
+        resolve(result);
+      })
+      .catch(err => {
+        reject();
+      });
   });
 module.exports = Gif;

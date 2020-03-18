@@ -69,3 +69,44 @@ module.exports.deleteGif = (req, res) => {
       });
     });
 };
+
+module.exports.commentOnGif = (req, res) => {
+  const comment = {};
+  comment.comment = req.body.comment;
+  comment.content = parseInt(req.body.content);
+  comment.contentId = parseInt(req.params.gifId);
+  comment.userId = parseInt(req.body.userId);
+  comment.commentDate = new Date().toLocaleString();
+  comment.lastUpdated = new Date().toLocaleString();
+
+  Gif.comment(comment)
+    .then(newComment => {
+      if (newComment) {
+        return res.status(200).json({
+          data: {
+            message: 'Comment successfully created on gif',
+            commentId: parseInt(newComment.comment_id),
+            gifId: parseInt(newComment.content_id),
+            createdOn: new Date(`${newComment.comment_date}`).toLocaleString(),
+            updatedOn: new Date(`${newComment.last_updated}`).toLocaleString(),
+            comment: newComment.comment
+          },
+          status: 'success'
+        });
+      }
+      return res.status(400).json({
+        data: {
+          message: 'Error creating Comment'
+        },
+        status: 'error'
+      });
+    })
+    .catch(error => {
+      return res.status(400).json({
+        data: {
+          message: 'Error creating Comment'
+        },
+        status: 'error'
+      });
+    });
+};
