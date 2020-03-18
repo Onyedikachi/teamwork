@@ -104,4 +104,17 @@ Article.comment = ({
       });
   });
 
+Article.getArticles = () =>
+  new Promise((resolve, reject) => {
+    const query = `SELECT * FROM articles ORDER BY last_updated DESC`;
+
+    pool.query(query, (err, results) => {
+      if (err) {
+        reject();
+      } else {
+        resolve(results.rows);
+      }
+    });
+  });
+
 module.exports = Article;

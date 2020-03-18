@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 const config = require('../../config');
 
+const Article = require('../../models/Article');
+
 /**
  * Create users
  * @param {object} req - Request object
@@ -96,4 +98,13 @@ module.exports.login = async (req, res) => {
           .json({ message: 'Invalid Credentials', status: 'error' });
       }
     });
+};
+
+module.exports.getFeeds = (req, res) => {
+  Article.getArticles().then(result => {
+    return res.status(200).json({
+      data: result,
+      status: 'success'
+    });
+  });
 };
