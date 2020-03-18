@@ -1,5 +1,7 @@
 const { pool } = require('../../db');
 
+const Comment = require('./Comment');
+
 const Article = {};
 
 Article.create = ({
@@ -73,6 +75,33 @@ Article.delete = ({ articleId }) =>
         resolve(results.rowCount);
       }
     });
+  });
+
+Article.comment = ({
+  comment,
+  content,
+  contentId,
+  userId,
+  commentDate,
+  lastUpdated
+}) =>
+  new Promise((resolve, reject) => {
+    const values = [];
+
+    values.push(comment);
+    values.push(content);
+    values.push(contentId);
+    values.push(userId);
+    values.push(commentDate);
+    values.push(lastUpdated);
+
+    Comment.add(values)
+      .then(result => {
+        resolve(result);
+      })
+      .catch(err => {
+        reject();
+      });
   });
 
 module.exports = Article;

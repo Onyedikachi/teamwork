@@ -7,4 +7,5 @@ const router = express.Router();
 router.post('/', ctrlArticles.createArticle);
 router.patch('/:articleId', ctrlArticles.updateArticle);
 router.delete('/:articleId', ctrlArticles.deleteArticle);
+router.post('/:articleId/comment', ctrlArticles.commentonArticle);
 module.exports = router;

@@ -110,3 +110,44 @@ module.exports.deleteArticle = (req, res) => {
       });
     });
 };
+
+module.exports.commentonArticle = (req, res) => {
+  const comment = {};
+  comment.contentId = parseInt(req.params.articleId);
+  comment.userId = parseInt(req.body.userId);
+  comment.content = parseInt(req.body.content);
+  comment.comment = req.body.comment;
+  comment.commentDate = new Date().toLocaleString();
+  comment.lastUpdated = new Date().toLocaleString();
+
+  Article.comment(comment)
+    .then(newComment => {
+      if (newComment) {
+        return res.status(200).json({
+          data: {
+            message: 'Comment successfully created',
+            commentId: parseInt(newComment.comment_id),
+            articleId: parseInt(newComment.content_id),
+            createdOn: new Date(`${newComment.comment_date}`).toLocaleString(),
+            updatedOn: new Date(`${newComment.last_updated}`).toLocaleString(),
+            comment: newComment.comment
+          },
+          status: 'success'
+        });
+      }
+      return res.status(400).json({
+        data: {
+          message: 'Error creating Comment'
+        },
+        status: 'error'
+      });
+    })
+    .catch(error => {
+      return res.status(400).json({
+        data: {
+          message: 'Error creating Comment'
+        },
+        status: 'error'
+      });
+    });
+};
