@@ -29,7 +29,6 @@ const apiRoutes = require('./router');
 app.use('/api/v1', apiRoutes);
 
 app.use((err, req, res, next) => {
-  console.log(err);
   if (err.isBoom) {
     const { message } = err.data[0];
     res.status(err.output.statusCode).json({

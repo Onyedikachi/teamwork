@@ -16,7 +16,7 @@ pool.connect((err, db, done) => {
   if (err) {
     return console.log(err);
   }
-  return console.log('Subsequently connected to the database');
+  return console.log('Connected to the Database');
 });
 
 module.exports.pool = pool;
