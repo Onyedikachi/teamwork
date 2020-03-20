@@ -4,8 +4,20 @@ const ctrlUser = require('../index');
 
 const router = express.Router();
 
-router.post('/', ctrlUser.createUser);
+const {
+  checkTokenExists,
+  verifyToken,
+  checkAdmin
+} = require('../../../helpers');
+
+router.post(
+  '/',
+  checkTokenExists,
+  verifyToken,
+  checkAdmin,
+  ctrlUser.createUser
+);
 router.post('/login', ctrlUser.login);
-router.get('/feeds', ctrlUser.getFeeds);
+router.get('/feeds', checkTokenExists, verifyToken, ctrlUser.getFeeds);
 
 module.exports = router;

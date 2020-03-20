@@ -2,15 +2,6 @@ const jwt = require('jsonwebtoken');
 const { jwtsecret } = require('../config');
 
 module.exports = {
-  sendJSONResponse(res, status, data, method, message) {
-    res.status(status);
-    res.json({
-      status,
-      method,
-      message,
-      data
-    });
-  },
   catchErrors(fn) {
     const caught = (req, res, next) => fn(req, res, next).catch(next);
     return caught;
@@ -21,30 +12,30 @@ module.exports = {
 
   // check if token is valid,
   verifyToken(req, res, next) {
-    const { authorization } = req.headers;
+    const { token } = req.headers;
     const { userId } = req.params;
 
     try {
-      const decoded = jwt.verify(authorization, jwtsecret);
+      const decoded = jwt.verify(token, jwtsecret);
 
       if (decoded.id === userId) {
         req.id = decoded.id;
         return next();
       }
       return res.status(401).json({
-        status: 401,
-        method: req.method,
-        message: 'Unauthorized User',
-        data: null
+        status: 'error',
+        data: {
+          message: 'Unauthorized User'
+        }
       });
 
       //
     } catch (e) {
       return res.status(400).json({
-        status: 400,
-        method: req.method,
-        message: 'Invalid token',
-        data: null
+        status: 'error',
+        data: {
+          message: 'Unauthorized User'
+        }
       });
     }
   },
@@ -52,14 +43,14 @@ module.exports = {
   // check if token exists,
   // passing an empty token to jwt throws errors
   checkTokenExists(req, res, next) {
-    const { authorization } = req.headers;
+    const { token } = req.headers;
 
-    if (!authorization) {
+    if (!token) {
       return res.status(400).json({
-        status: 400,
-        method: req.method,
-        message: 'No token available',
-        data: null
+        status: 'error',
+        data: {
+          message: 'No token available'
+        }
       });
     }
 
@@ -68,24 +59,24 @@ module.exports = {
 
   // decode token
   decodeToken(req, res) {
-    const { authorization } = req.headers;
-    return jwt.decode(authorization);
+    const { token } = req.headers;
+    return jwt.decode(token);
   },
 
   // decode admin token and return it
   checkAdmin(req, res, next) {
-    const { authorization } = req.headers;
+    const { token } = req.headers;
 
-    const decoded = jwt.decode(authorization);
+    const decoded = jwt.decode(token);
     if (decoded.admin) {
       return next();
     }
 
     return res.status(401).json({
-      status: 401,
-      method: req.method,
-      message: 'Only Admin Access',
-      data: null
+      status: 'error',
+      data: {
+        message: 'Only Admin Access'
+      }
     });
   }
 };

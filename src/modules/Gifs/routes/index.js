@@ -6,8 +6,21 @@ const router = express.Router();
 
 const upload = require('../../../middlewares/uploadMiddleware');
 
-router.post('/', upload.single('image'), ctrlGif.createGif);
-router.delete('/:gifId', ctrlGif.deleteGif);
-router.get('/:gifId', ctrlGif.getGif);
-router.post('/:gifId/comment', ctrlGif.commentOnGif);
+const { checkTokenExists, verifyToken } = require('../../../helpers');
+
+router.post(
+  '/',
+  checkTokenExists,
+  verifyToken,
+  upload.single('image'),
+  ctrlGif.createGif
+);
+router.delete('/:gifId', checkTokenExists, verifyToken, ctrlGif.deleteGif);
+router.get('/:gifId', checkTokenExists, verifyToken, ctrlGif.getGif);
+router.post(
+  '/:gifId/comment',
+  checkTokenExists,
+  verifyToken,
+  ctrlGif.commentOnGif
+);
 module.exports = router;
