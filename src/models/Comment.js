@@ -15,5 +15,19 @@ Comment.add = values =>
       resolve(result.rows[0]);
     });
   });
+Comment.get = contentId =>
+  new Promise((resolve, reject) => {
+    const query = `SELECT * FROM comments AS com INNER JOIN contents AS con ON con.content_id = com.content
+    WHERE com.content_id = $1;
+    `;
+    const values = [];
+    values.push(contentId);
 
+    pool.query(query, values, (error, result) => {
+      if (error) {
+        reject(new Error('Incorrect query parameters'));
+      }
+      resolve(result.rows);
+    });
+  });
 module.exports = Comment;
