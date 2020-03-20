@@ -8,5 +8,10 @@ module.exports = {
     password: process.env.DBPASSWORD
   },
   port: process.env.PORT,
-  jwtsecret: process.env.JWTSECRET
+  jwtsecret: process.env.JWTSECRET,
+  cloudStore: {
+    apiKey: process.env.API_KEY,
+    apiSecret: process.env.API_SECRET,
+    cloudName: process.env.CLOUD_NAME
+  }
 };
