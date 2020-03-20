@@ -151,3 +151,29 @@ module.exports.commentonArticle = (req, res) => {
       });
     });
 };
+module.exports.getArticle = (req, res) => {
+  const articleId = parseInt(req.params.articleId);
+  Article.findArticleById(articleId)
+    .then(result => {
+      if (result) {
+        return res.status(200).json({
+          data: result,
+          status: 'success'
+        });
+      }
+      return res.status(400).json({
+        data: {
+          message: 'No record for this article'
+        },
+        status: 'error'
+      });
+    })
+    .catch(error => {
+      return res.status(400).json({
+        data: {
+          message: 'No record for this article'
+        },
+        status: 'error'
+      });
+    });
+};

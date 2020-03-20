@@ -117,4 +117,37 @@ Article.getArticles = () =>
     });
   });
 
+Article.findArticleById = articleId =>
+  new Promise((resolve, reject) => {
+    const query = `SELECT art.article_id As articleId, 
+    art.date_of_creation As createdOn, art.article_title As articleTitle, 
+    art.article_content As article 
+    FROM
+    articles AS art
+	  WHERE art.article_id = $1;`;
+
+    const values = [];
+    values.push(articleId);
+
+    pool.query(query, values, (err, res) => {
+      const article = res.rows[0];
+      if (err) {
+        reject(new Error('Article not found'));
+      }
+
+      if (article)
+        Comment.get(article.articleid)
+          .then(comments => {
+            if (comments) {
+              article.comments = comments;
+            }
+            resolve(article);
+          })
+          .catch(error => {
+            reject(new Error('Error encountered while fetching comments'));
+          });
+      else reject(new Error('Invalid article'));
+    });
+  });
+
 module.exports = Article;
