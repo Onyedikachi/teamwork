@@ -135,8 +135,12 @@ Article.findArticleById = articleId =>
         reject(new Error('Article not found'));
       }
 
-      if (article)
-        Comment.get(article.articleid)
+      if (article) {
+        console.log(article);
+        const commentDesc = {};
+        commentDesc.contentId = article.articleid;
+        commentDesc.type = 'article';
+        Comment.get(commentDesc)
           .then(comments => {
             if (comments) {
               article.comments = comments;
@@ -146,7 +150,7 @@ Article.findArticleById = articleId =>
           .catch(error => {
             reject(new Error('Error encountered while fetching comments'));
           });
-      else reject(new Error('Invalid article'));
+      } else reject(new Error('Invalid article'));
     });
   });
 
