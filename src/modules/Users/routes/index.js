@@ -7,7 +7,8 @@ const router = express.Router();
 const {
   checkTokenExists,
   verifyToken,
-  checkAdmin
+  checkAdmin,
+  catchErrors
 } = require('../../../helpers');
 
 router.post(
@@ -15,9 +16,14 @@ router.post(
   checkTokenExists,
   verifyToken,
   checkAdmin,
-  ctrlUser.createUser
+  catchErrors(ctrlUser.createUser)
 );
-router.post('/login', ctrlUser.login);
-router.get('/feeds', checkTokenExists, verifyToken, ctrlUser.getFeeds);
+router.post('/login', catchErrors(ctrlUser.login));
+router.get(
+  '/feeds',
+  checkTokenExists,
+  verifyToken,
+  catchErrors(ctrlUser.getFeeds)
+);
 
 module.exports = router;

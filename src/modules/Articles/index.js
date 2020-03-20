@@ -1,7 +1,7 @@
 /* eslint-disable radix */
 const Article = require('../../models/Article');
 
-module.exports.createArticle = (req, res) => {
+module.exports.createArticle = async (req, res) => {
   const article = {};
 
   article.articleContent = req.body.articleContent.trim().toLowerCase();
@@ -43,7 +43,7 @@ module.exports.createArticle = (req, res) => {
       });
     });
 };
-module.exports.updateArticle = (req, res) => {
+module.exports.updateArticle = async (req, res) => {
   const article = {};
   article.articleId = parseInt(req.params.articleId);
   article.articleContent = req.body.articleContent.trim().toLowerCase();
@@ -81,7 +81,7 @@ module.exports.updateArticle = (req, res) => {
       });
     });
 };
-module.exports.deleteArticle = (req, res) => {
+module.exports.deleteArticle = async (req, res) => {
   const article = {};
   article.articleId = parseInt(req.params.articleId);
   Article.delete(article)
@@ -111,7 +111,7 @@ module.exports.deleteArticle = (req, res) => {
     });
 };
 
-module.exports.commentonArticle = (req, res) => {
+module.exports.commentonArticle = async (req, res) => {
   const comment = {};
   comment.contentId = parseInt(req.params.articleId);
   comment.userId = parseInt(req.body.userId);
@@ -151,7 +151,7 @@ module.exports.commentonArticle = (req, res) => {
       });
     });
 };
-module.exports.getArticle = (req, res) => {
+module.exports.getArticle = async (req, res) => {
   const articleId = parseInt(req.params.articleId);
   Article.findArticleById(articleId)
     .then(result => {

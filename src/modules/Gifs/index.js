@@ -1,7 +1,7 @@
 /* eslint-disable radix */
 const Gif = require('../../models/Gif');
 
-module.exports.createGif = (req, res) => {
+module.exports.createGif = async (req, res) => {
   const image = {};
   image.gifUrl = req.file.url;
   image.gifStatus = req.body.gifStatus;
@@ -40,7 +40,7 @@ module.exports.createGif = (req, res) => {
       });
     });
 };
-module.exports.deleteGif = (req, res) => {
+module.exports.deleteGif = async (req, res) => {
   const gif = {};
   gif.gifId = parseInt(req.params.gifId);
   Gif.delete(gif)
@@ -70,7 +70,7 @@ module.exports.deleteGif = (req, res) => {
     });
 };
 
-module.exports.commentOnGif = (req, res) => {
+module.exports.commentOnGif = async (req, res) => {
   const comment = {};
   comment.comment = req.body.comment;
   comment.content = parseInt(req.body.content);
@@ -110,7 +110,7 @@ module.exports.commentOnGif = (req, res) => {
       });
     });
 };
-module.exports.getGif = (req, res) => {
+module.exports.getGif = async (req, res) => {
   const gifId = parseInt(req.params.gifId);
   Gif.findGifById(gifId)
     .then(result => {

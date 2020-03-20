@@ -4,31 +4,40 @@ const ctrlArticles = require('../index');
 
 const router = express.Router();
 
-const { checkTokenExists, verifyToken } = require('../../../helpers');
+const {
+  checkTokenExists,
+  verifyToken,
+  catchErrors
+} = require('../../../helpers');
 
-router.post('/', checkTokenExists, verifyToken, ctrlArticles.createArticle);
+router.post(
+  '/',
+  checkTokenExists,
+  verifyToken,
+  catchErrors(ctrlArticles.createArticle)
+);
 router.patch(
   '/:articleId',
   checkTokenExists,
   verifyToken,
-  ctrlArticles.updateArticle
+  catchErrors(ctrlArticles.updateArticle)
 );
 router.delete(
   '/:articleId',
   checkTokenExists,
   verifyToken,
-  ctrlArticles.deleteArticle
+  catchErrors(ctrlArticles.deleteArticle)
 );
 router.post(
   '/:articleId/comment',
   checkTokenExists,
   verifyToken,
-  ctrlArticles.commentonArticle
+  catchErrors(ctrlArticles.commentonArticle)
 );
 router.get(
   '/:articleId',
   checkTokenExists,
   verifyToken,
-  ctrlArticles.getArticle
+  catchErrors(ctrlArticles.getArticle)
 );
 module.exports = router;

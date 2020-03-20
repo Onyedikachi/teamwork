@@ -12,7 +12,7 @@ const Article = require('../../models/Article');
  * @param {object} req - Request object
  * @param {object} res - Response object
  */
-module.exports.createUser = (req, res) => {
+module.exports.createUser = async (req, res) => {
   const userData = req.body;
 
   // Verify is user email exists already
@@ -100,7 +100,7 @@ module.exports.login = async (req, res) => {
     });
 };
 
-module.exports.getFeeds = (req, res) => {
+module.exports.getFeeds = async (req, res) => {
   Article.getArticles().then(result => {
     return res.status(200).json({
       data: result,

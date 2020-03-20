@@ -136,7 +136,6 @@ Article.findArticleById = articleId =>
       }
 
       if (article) {
-        console.log(article);
         const commentDesc = {};
         commentDesc.contentId = article.articleid;
         commentDesc.type = 'article';
