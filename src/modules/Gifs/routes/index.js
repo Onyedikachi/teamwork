@@ -8,5 +8,6 @@ const upload = require('../../../middlewares/uploadMiddleware');
 
 router.post('/', upload.single('image'), ctrlGif.createGif);
 router.delete('/:gifId', ctrlGif.deleteGif);
+router.get('/:gifId', ctrlGif.getGif);
 router.post('/:gifId/comment', ctrlGif.commentOnGif);
 module.exports = router;

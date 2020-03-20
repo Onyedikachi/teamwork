@@ -110,3 +110,29 @@ module.exports.commentOnGif = (req, res) => {
       });
     });
 };
+module.exports.getGif = (req, res) => {
+  const gifId = parseInt(req.params.gifId);
+  Gif.findGifById(gifId)
+    .then(result => {
+      if (result) {
+        return res.status(200).json({
+          data: result,
+          status: 'success'
+        });
+      }
+      return res.status(400).json({
+        data: {
+          message: 'No record for this article'
+        },
+        status: 'error'
+      });
+    })
+    .catch(error => {
+      return res.status(400).json({
+        data: {
+          message: 'No record for this article'
+        },
+        status: 'error'
+      });
+    });
+};

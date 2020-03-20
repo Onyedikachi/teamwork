@@ -70,4 +70,42 @@ Gif.comment = commentDesc =>
         reject();
       });
   });
+Gif.findGifById = gifId =>
+  new Promise((resolve, reject) => {
+    const query = `SELECT g.gif_id AS gifId, 
+    g.created_on As createdOn, g.gif_name As title, g.gif_status As isShared,
+    g.user_id As authorId, g.gif_url As url
+    FROM
+    gifs AS g
+	  WHERE g.gif_id = $1;`;
+
+    const values = [];
+    values.push(gifId);
+
+    pool.query(query, values, (err, res) => {
+      if (err) {
+        reject(new Error('Article not found'));
+      }
+
+      const gifs = res.rows;
+      if (gifs) {
+        const gif = gifs[0];
+
+        const commentDesc = {};
+        commentDesc.contentId = gif.gifid;
+        commentDesc.type = 'gif';
+
+        Comment.get(commentDesc)
+          .then(comments => {
+            if (comments) {
+              gif.comments = comments;
+            }
+            resolve(gif);
+          })
+          .catch(error => {
+            reject(new Error('Error encountered while fetching comments'));
+          });
+      } else reject(new Error('Invalid article'));
+    });
+  });
 module.exports = Gif;
