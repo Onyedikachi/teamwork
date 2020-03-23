@@ -1,5 +1,6 @@
 const http = require('http');
 const app = require('./src/app');
+const terminate = require('./src/helpers/terminate');
 
 require('dotenv').config({ path: '.env' });
 const config = require('./src/config');
@@ -40,6 +41,11 @@ const errorHandler = error => {
 
 const server = http.createServer(app);
 
+const exitHandler = terminate(server, {
+  coredump: false,
+  timeout: 500
+});
+
 server.on('error', errorHandler);
 server.on('listening', () => {
   const address = server.address();
@@ -47,5 +53,9 @@ server.on('listening', () => {
   logger.info(`Listening on ${bind}`);
   console.log(`Listening on ${bind}`);
 });
-
 server.listen(port);
+
+process.on('uncaughtException', exitHandler(1, 'Unexpected Error'));
+process.on('unhandledRejection', exitHandler(1, 'Unhandled Promise'));
+process.on('SIGTERM', exitHandler(0, 'SIGTERM'));
+process.on('SIGINT', exitHandler(0, 'SIGINT'));
